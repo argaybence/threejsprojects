@@ -1,87 +1,123 @@
-Threejs telepítése:
+# Three.js Telepítése
 
-    Szükségünk van a nodejs-re. Link: https://nodejs.org/en/download/source-code
+## Előkészületek
 
-    Ha npm -v egy valós verzió számmal tér vissza, akkor sikeresen feltelepítettük.
-    Telepítsük a http-server ?alcsomagot? amellyel élőben tudjuk követni majd a
-    weboldalunk építését. Ehhez adjuk ki a következő parancsot:
-        npm install -g http-server
-    Használat:
-        Terminálba navigáljunk el a projekt mappába, és ott adjuk ki a következő parancsot:
-            http-server .
+A Three.js használatához szükségünk van a Node.js telepítésére. Letöltési link: [Node.js letöltése](https://nodejs.org/en/download/source-code)
 
-    Hozzuk létra a projektünket, vagy ha már létezik, akkor a terminálba navigáljunk el
-    a projekt elérési útvonalához, és adjuk ki a következő parancsokat:
-        npm init -y
-        npm install three
-    
-    A következő paranccsal tudjuk ellenőrizni, hogy valóban feltelepült-e a threejs:
-        npm list
-    Kimenet:
-        YourProject@1.0.0 C:\Users\youruser\YourPath\YourProject\
-        `-- three@0.170.0
-    
+Telepítés után ellenőrizzük az `npm` telepítettségét az alábbi paranccsal:
 
+```bash
+npm -v
+```
 
-Threejs használata:
+Ha ez a parancs egy verziószámmal tér vissza, akkor sikeresen feltelepítettük a Node.js-t és az npm-et.
 
-    A <script> tag használata:
-        <script type="module">
-            import * as THREE from './node_modules/three/build/three.module.js';
+## HTTP-szerver Telepítése
 
-            const scene = new THREE.Scene();
+Telepítsük a `http-server` csomagot, amellyel élőben követhetjük a weboldalunk fejlesztését. Ehhez adjuk ki a következő parancsot:
 
-            const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+```bash
+npm install -g http-server
+```
 
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
+### Használat
 
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
+A terminálban navigáljunk el a projekt mappájába, és ott adjuk ki az alábbi parancsot a szerver elindításához:
 
-            camera.position.z = 5;
+```bash
+http-server .
+```
 
-            function animate() {
-                requestAnimationFrame(animate);
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-                renderer.render(scene, camera);
-            }
-            animate();
-        </script>
+## A Projekt Létrehozása
 
+Hozzuk létre a projektet, vagy ha már létezik, akkor a terminálban navigáljunk el a projekt elérési útvonalához, és adjuk ki a következő parancsokat:
 
-    Külső fájl beimportálva:
-        Az index.html-ben:
-            <script type="module" src="main.js"></script>
-        
-        A main.js-ben:
-            import * as THREE from './node_modules/three/build/three.module.js';
+```bash
+npm init -y
+npm install three
+```
 
-            const scene = new THREE.Scene();
+### Telepítés Ellenőrzése
 
-            const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+Az alábbi paranccsal ellenőrizhetjük, hogy sikeresen feltelepült-e a Three.js:
 
-            const renderer = new THREE.WebGLRenderer();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
+```bash
+npm list
+```
 
-            const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
+### Kimenet:
 
-            camera.position.z = 5;
+```plaintext
+YourProject@1.0.0 C:\Users\youruser\YourPath\YourProject\
+`-- three@0.170.0
+```
 
-            function animate() {
-                requestAnimationFrame(animate);
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-                renderer.render(scene, camera);
-            }
-            animate();
+## Three.js Használata
 
+### Three.js Betöltése `<script>` Tag-gel
 
+Az index.html fájlban a következő módon adhatjuk hozzá a Three.js-t:
+
+```html
+<script type="module">
+    import * as THREE from './node_modules/three/build/three.module.js';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    camera.position.z = 5;
+
+    function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
+```
+
+### Three.js Betöltése Külső Fájlból
+
+Az index.html fájlban a következő módon hivatkozhatunk a külső fájlra:
+
+```html
+<script type="module" src="main.js"></script>
+```
+
+A `main.js` fájl tartalma:
+
+```javascript
+import * as THREE from './node_modules/three/build/three.module.js';
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.z = 5;
+
+function animate() {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+}
+animate();
+```
